@@ -2,8 +2,11 @@ package leetcode;
 
 import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,9 +43,64 @@ public class App {
     //    System.out.println(a + "," + b);
 
 
-    int[] nums1 = new int[] {1, 2, 2, 1};
-    int[] nums2 = new int[] {2, 2};
+    //    int[] nums1 = new int[] {1, 2, 2, 1};
+    //    int[] nums2 = new int[] {2, 2};
+    //    intersect(nums1, nums2);
 
+    int[] nums = new int[] {9, 9, 9};
+    plusOne(nums);
+
+
+  }
+
+
+  /**
+   * @param digits
+   * @return
+   */
+  public static int[] plusOne(int[] digits) {
+    if (digits == null || digits.length == 0) {
+      return digits;
+    }
+
+    /**
+     * 方法一
+     */
+    //    boolean carry = true;
+    //    for (int i = digits.length - 1; i >= 0; i--) {
+    //      if ((digits[i] + 1) == 10 && carry) {
+    //        digits[i] = 0;
+    //      } else {
+    //        digits[i] = digits[i] + 1;
+    //        carry = false;
+    //        break;
+    //      }
+    //    }
+    //
+    //    if (!carry) {
+    //      return digits;
+    //    }
+    //    int[] result = new int[digits.length + 1];
+    //    result[0] = 1;
+    //    return result;
+
+
+    /**
+     * 方法二
+     */
+    int carry = 1;
+    for (int i = digits.length - 1; i >= 0; i--) {
+      int tmp = digits[i] + carry;
+      digits[i] = tmp % 10;
+      carry = tmp / 10;
+    }
+    if(carry == 1){
+      int[] result = new int[digits.length + 1];
+      result[0] = 1;
+      return result;
+    }
+
+    return digits;
   }
 
 
@@ -60,6 +118,30 @@ public class App {
     if (nums2 == null || nums2.length == 0) {
       return nums2;
     }
+    Arrays.sort(nums1);
+    Arrays.sort(nums2);
+
+    int i = 0, j = 0;
+    List<Integer> temp = new ArrayList<>();
+    while (i < nums1.length && j < nums2.length) {
+      if (nums1[i] == nums2[j]) {
+        temp.add(nums1[i]);
+        i++;
+        j++;
+      } else if (nums1[i] < nums2[j]) {
+        i++;
+      } else {
+        j++;
+      }
+    }
+
+    int[] result = new int[temp.size()];
+    for (int k = 0; k < result.length; k++) {
+      result[k] = temp.get(k);
+    }
+
+
+    return result;
 
   }
 
