@@ -5,16 +5,19 @@ import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
+ * 数组
  * Hello world!
  *
  * @author hefuhai
  */
-public class App {
+public class ArraysApp {
   public static void main(String[] args) {
 
 
@@ -33,22 +36,95 @@ public class App {
     //    System.out.println(singleNumber(num));
 
 
+
     /**
      * 异或交换两个数组
      */
     //    int a = 2, b = 6;
     //    a = a ^ b;
-    //    b = b ^ a;
-    //    a = a ^ b;
+    //    b = a ^ b;  b = a ^ b ^ b
+    //    a = a ^ b; a = a ^ b ^ a ^ b ^ b
     //    System.out.println(a + "," + b);
 
 
     //    int[] nums1 = new int[] {1, 2, 2, 1};
     //    int[] nums2 = new int[] {2, 2};
     //    intersect(nums1, nums2);
+    //
+    //    int[] nums = new int[] {9, 9, 9};
+    //    plusOne(nums);
 
-    int[] nums = new int[] {9, 9, 9};
-    plusOne(nums);
+
+//    int[] nums = new int[] {1, 0, 1};
+//    moveZeroes(nums);
+
+
+    int[] nums = new int[] {3,2,4};
+
+    int[] array = twoSum(nums,6);
+
+    System.out.println(array);
+
+
+
+  }
+
+
+
+  public static int[] twoSum(int[] nums, int target) {
+    if (nums == null || nums.length == 0) {
+      return null;
+    }
+
+    Map<Integer,Integer> map = new HashMap<>();
+
+    for(int i = 0 ; i < nums.length;i++){
+      int reduce = target - nums[i];
+      if(map.containsKey(reduce) ){
+        return new int[]{map.get(reduce),i};
+      }
+
+      map.put(nums[i],i);
+    }
+
+    return null;
+
+  }
+
+
+
+  /**
+   * 移动零
+   *
+   * @param nums
+   */
+  public static void moveZeroes(int[] nums) {
+    if (nums == null || nums.length == 0) {
+      return;
+    }
+    //    int temp = 0;
+    //    for (int i = 0; i < nums.length - 1; i++) {
+    //      for (int j = i + 1; j < nums.length; j++) {
+    //        if (nums[i] == 0 && nums[j] != 0) {
+    //          temp = nums[i];
+    //          nums[i] = nums[j];
+    //          nums[j] = temp;
+    //          break;
+    //        }
+    //      }
+    //    }
+
+
+
+    int lastZeroIndex = 0;
+    for (int i = 0; i < nums.length; i++) {
+      if (nums[i] != 0) {
+        int temp = nums[i];
+        nums[i] = nums[lastZeroIndex];
+        nums[lastZeroIndex++] = temp;
+      }
+    }
+
 
 
   }
@@ -94,7 +170,7 @@ public class App {
       digits[i] = tmp % 10;
       carry = tmp / 10;
     }
-    if(carry == 1){
+    if (carry == 1) {
       int[] result = new int[digits.length + 1];
       result[0] = 1;
       return result;
